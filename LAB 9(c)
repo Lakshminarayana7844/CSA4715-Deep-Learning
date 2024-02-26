@@ -1,23 +1,21 @@
-class SigmoidActivation:
+class LinearActivation:
     def forward(self, inputs):
         self.inputs = inputs
-        return 1 / (1 + np.exp(-inputs))
+        return inputs
     
     def backward(self, dvalues):
-        sigmoid = 1 / (1 + np.exp(-self.inputs))
-        return dvalues * sigmoid * (1 - sigmoid)
+        return dvalues
 
-nn_sigmoid = NeuralNetwork()
+nn_linear = NeuralNetwork()
 
-nn_sigmoid.add_layer(DenseLayer(2, 4))
-nn_sigmoid.add_layer(SigmoidActivation())
-nn_sigmoid.add_layer(DenseLayer(4, 1))
+nn_linear.add_layer(DenseLayer(2, 4))
+nn_linear.add_layer(LinearActivation())
+nn_linear.add_layer(DenseLayer(4, 1))
 
 x = np.array([[0.1, 0.2]])
 
-output_sigmoid = nn_sigmoid.forward(x)
-print("Output with Sigmoid Activation:", output_sigmoid)
+output_linear = nn_linear.forward(x)
+print("Output with Linear Activation:", output_linear)
 
-dummy_gradients = np.array([[0.1]])
-dvalues_sigmoid = nn_sigmoid.backward(dummy_gradients)
-print("Gradients after backward pass with Sigmoid Activation:", dvalues_sigmoid)
+dvalues_linear = nn_linear.backward(dummy_gradients)
+print("Gradients after backward pass with Linear Activation:", dvalues_linear)
